@@ -26,6 +26,8 @@ RUN composer install
 # Rodar migrações pendentes
 RUN php artisan migrate
 
+RUN php artisan jwt:secret
+
 # Expor a porta e iniciar o servidor
 EXPOSE 8001
 ENTRYPOINT ["php", "artisan", "serve", "--host=0.0.0.0" ,  "--port=8001"]
