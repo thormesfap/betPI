@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\jogoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,17 @@ Route::group(
         Route::patch('promote/{user}', 'AuthController@promote')->middleware('isAdmin');
     }
 );
+Route::prefix("/bank-account")->group(function () {
+    Route::get('/get/{id}', [BankAccountController::class, 'Account_of_User']);
+    Route::post('/post', [BankAccountController::class, 'createRecord']);
+    Route::put('/edit/{id}', [BankAccountController::class, 'editRecord']);
+    Route::delete('/delete/{id}', [BankAccountController::class, 'deleteRecord']);
+
+});
+
+Route::prefix("/games")->group(function () {
+    Route::get('/getAll', [jogoController::class, 'getAllRecord']);
+    Route::post('/post', [jogoController::class, 'createRecord']);
+    Route::put('/edit/{id}', [jogoController::class, 'editRecord']);
+    Route::delete('/delete/{id}', [jogoController::class, 'deleteRecord']);
+});
