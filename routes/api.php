@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\ApostasController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -27,4 +28,12 @@ Route::prefix("/bank-account")->middleware('logged')->group(function () {
     Route::post('/post', [BankAccountController::class, 'createRecord']);
     Route::put('/edit/{id}', [BankAccountController::class, 'editRecord']);
     Route::delete('/delete/{id}', [BankAccountController::class, 'deleteRecord']);
+});
+// Rotas para as apostas
+Route::prefix("/apostas")->middleware('logged')->group(function () {
+    Route::post('/', [ApostasController::class, 'store']);
+    Route::get('/', [ApostasController::class, 'index']);
+    Route::get('/vencedor/{venceu}', [ApostasController::class, 'showVencedor']);
+    Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);
+    Route::patch('/venceu/{id}', [ApostasController::class, 'updateVenceu']); // Nova rota para atualizar 'venceu'
 });
