@@ -32,7 +32,7 @@ Route::prefix("/bank-account")->middleware('logged')->group(function () {
 
 });
 
-Route::prefix("/games")->group(function () {
+Route::prefix("/games")->middleware('isAdmin')->group(function () {
     Route::get('/getAll', [jogoController::class, 'getAllRecord']);
     Route::post('/post', [jogoController::class, 'createRecord']);
     Route::put('/edit/{id}', [jogoController::class, 'editRecord']);
