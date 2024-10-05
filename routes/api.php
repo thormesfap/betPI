@@ -14,7 +14,7 @@ Route::group(
         'prefix' => 'auth',
         'namespace' => 'App\Http\Controllers'
     ],
-    function ($router) {
+    function () {
         Route::get('me', 'AuthController@me');
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');

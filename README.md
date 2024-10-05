@@ -5,8 +5,7 @@
 Execute os comandos abaixo para subir um container com a aplicação:
 
 ```shell
-docker build -t bombombet .
-docker run -it --rm --name BomBomBet -p 8001:8001 bombombet
+docker-compose up -d
 ```
 Após criação da imagem e execução do container, abra o navegador no link http://localhost:8001 para abrir a aplicação
 

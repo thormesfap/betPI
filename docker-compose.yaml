@@ -1,0 +1,47 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./:/app
+    depends_on:
+      - primary
+
+  # Servidor primário (escrita)
+  primary:
+    image: postgres:15
+    container_name: postgres-primary
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - primary_data:/var/lib/postgresql/data
+      - ./postgres/primary/postgres.conf:/etc/postgresql/postgresql.conf
+      - ./postgres/primary/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+    ports:
+      - "5432:5432"
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+
+  # Servidor secundário (replica)
+  replica:
+    image: postgres:15
+    container_name: postgres-replica
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - replica_data:/var/lib/postgresql/data
+      - ./postgres/replica/postgres.conf:/etc/postgresql/postgresql.conf
+      - ./postgres/init/init-replica.sh:/docker-entrypoint-initdb.d/init-replica.sh
+    ports:
+      - "5433:5432"
+    depends_on:
+      - primary
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+
+volumes:
+  primary_data:
+  replica_data:
