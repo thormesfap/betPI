@@ -87,12 +87,12 @@ return [
             'url' => env('DB_URL'),
             'read' => [
                 'host' => [
-                    'postgres-replica'
+                    'postgres_replica'
                 ]
             ],
             'write' => [
                 'host' => [
-                    'postgres-primary'
+                    'postgres_primary'
                 ]
             ],
             #'host' => env('DB_HOST', '127.0.0.1'),

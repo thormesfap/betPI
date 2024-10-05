@@ -4,9 +4,15 @@
 
 Execute os comandos abaixo para subir um container com a aplicação:
 
+Windows
 ```shell
-docker-compose up -d
+docker-compose up -d --build
 ```
+
+Linux
+```shell
+sudo docker compose up -d --build
+``` 
 Após criação da imagem e execução do container, abra o navegador no link http://localhost:8001 para abrir a aplicação
 
 ***
