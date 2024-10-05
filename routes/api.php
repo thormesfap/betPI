@@ -4,6 +4,7 @@ use App\Http\Controllers\jogoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\ApostasController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -14,7 +15,7 @@ Route::group(
         'prefix' => 'auth',
         'namespace' => 'App\Http\Controllers'
     ],
-    function ($router) {
+    function () {
         Route::get('me', 'AuthController@me');
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout');
@@ -36,4 +37,12 @@ Route::prefix("/games")->group(function () {
     Route::post('/post', [jogoController::class, 'createRecord']);
     Route::put('/edit/{id}', [jogoController::class, 'editRecord']);
     Route::delete('/delete/{id}', [jogoController::class, 'deleteRecord']);
+});
+// Rotas para as apostas
+Route::prefix("/apostas")->middleware('logged')->group(function () {
+    Route::post('/', [ApostasController::class, 'store']);
+    Route::get('/', [ApostasController::class, 'index']);
+    Route::get('/vencedor/{venceu}', [ApostasController::class, 'showVencedor']);
+    Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);
+    Route::patch('/venceu/{id}', [ApostasController::class, 'updateVenceu']); // Nova rota para atualizar 'venceu'
 });
