@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Time extends Model
 {
     use HasFactory;
-
+    protected $table = 'times';
     public function modalidade(): BelongsTo{
         return $this->belongsTo(Modalidade::class);
     }
