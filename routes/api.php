@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\TimeController;
+
+use App\Http\Controllers\jogoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankAccountController;
@@ -29,6 +32,21 @@ Route::prefix("/bank-account")->middleware('logged')->group(function () {
     Route::post('/post', [BankAccountController::class, 'createRecord']);
     Route::put('/edit/{id}', [BankAccountController::class, 'editRecord']);
     Route::delete('/delete/{id}', [BankAccountController::class, 'deleteRecord']);
+
+});
+
+Route::prefix("/games")->middleware('isAdmin')->group(function () {
+    Route::get('/getAll', [jogoController::class, 'getAllRecord']);
+    Route::post('/post', [jogoController::class, 'createRecord']);
+    Route::put('/edit/{id}', [jogoController::class, 'editRecord']);
+    Route::delete('/delete/{id}', [jogoController::class, 'deleteRecord']);
+});
+Route::prefix("/time")->middleware('isAdmin')->group(function () {
+    Route::get('/getAll', [TimeController::class, 'getAllRecord']);
+    Route::get('/get/{id}', [TimeController::class, 'getRecord']);
+    Route::post('/post', [TimeController::class, 'createRecord']);
+    Route::put('/edit/{id}', [TimeController::class, 'editRecord']);
+    Route::delete('/delete/{id}', [TimeController::class, 'deleteRecord']);
 });
 // Rotas para as apostas
 Route::prefix("/apostas")->middleware('logged')->group(function () {
