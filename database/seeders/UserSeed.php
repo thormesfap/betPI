@@ -31,7 +31,5 @@ class UserSeed extends Seeder
         ]);
 
         $administrador->roles()->attach($admin);
-        
-        $user->roles()->attach($usuario);
     }
 }

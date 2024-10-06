@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\TimeController;
-
 use App\Http\Controllers\jogoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
