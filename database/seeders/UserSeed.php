@@ -15,11 +15,23 @@ class UserSeed extends Seeder
     public function run(): void
     {
         $admin = Role::where('name', 'role_admin')->first();
-        $thormes = User::create([
-            'name' => 'Thormes Filgueira Leite Pereira',
-            'email' => 'thormes@aluno.unifapce.edu.br',
+        
+        $usuario = Role::where('name', 'role_user')->first();
+
+        $administrador = User::create([
+            'name' => 'Administrador',
+            'email' => 'administrador@aluno.unifapce.edu.br',
             'password' => '12345678',
         ]);
-        $thormes->roles()->attach($admin);
+        
+        $user = User::create([
+            'name' => 'Usuário',
+            'email' => 'usuario@aluno.unifapce.edu.br',
+            'password' => '12345678',
+        ]);
+
+        $administrador->roles()->attach($admin);
+        
+        $user->roles()->attach($usuario);
     }
 }

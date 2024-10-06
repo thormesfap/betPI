@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\ApostasController;
+use App\Http\Controllers\TimeController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -37,3 +38,5 @@ Route::prefix("/apostas")->middleware('logged')->group(function () {
     Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);
     Route::patch('/venceu/{id}', [ApostasController::class, 'updateVenceu']); // Nova rota para atualizar 'venceu'
 });
+
+Route::get('/modalidades', [TimeController::class, 'buscarModalidades']);

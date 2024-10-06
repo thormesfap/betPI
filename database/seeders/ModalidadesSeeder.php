@@ -25,7 +25,7 @@ class ModalidadesSeeder extends Seeder
         ];
 
         foreach ($modalidades as $modalidade) {
-            Modalidades::create(modalidade: $modalidade);
+            Modalidades::create( $modalidade);
         }
     }
 }
