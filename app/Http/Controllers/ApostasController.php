@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Apostas;
+use App\Models\Jogos;
 
 class ApostasController extends Controller
 {
     // Criar uma nova aposta
     public function store(Request $request)
     {
+        // Buscar a data e hora do jogo
+        $jogo = Jogos::find($request->input('jogo_id'));
+        if (!$jogo) {
+            return response()->json(['message' => 'Jogo não encontrado'], 404);
+        }
+
+        // Verificar se o jogo já aconteceu
+        if (\Carbon\Carbon::parse($jogo->data_hora_jogo)->isPast()) {
+            return response()->json(['message' => 'Não é possível apostar em um jogo que já aconteceu'], 400);
+        }
+
         $dados = $request->validate([
             'user_id' => 'required|integer',
             'jogo_id' => 'required|integer',
@@ -17,8 +29,10 @@ class ApostasController extends Controller
             'placar_visitante' => 'nullable|integer',
             'resultado' => 'required|string|in:C,V,E', // Validar valores permitidos
             'valor' => 'required|numeric',
-            'limite' => 'required|date',
         ]);
+
+        // Definir o campo 'limite' como a data e hora do jogo
+        $dados['limite'] = \Carbon\Carbon::parse($jogo->data_hora_jogo)->subMinute();
 
         // Definir o campo 'venceu' como false por padrão
         $dados['venceu'] = false;
@@ -27,6 +41,8 @@ class ApostasController extends Controller
 
         return response()->json($aposta, 201);
     }
+
+    
 
     // Mostrar todas as apostas
     public function index()
@@ -65,4 +81,11 @@ class ApostasController extends Controller
         return response()->json(['message' => 'Aposta não encontrada'], 404);
     }
     
+    // Mostrar apostas do usuário autenticado
+    public function showUserApostas(Request $request)
+    {
+        $userId = $request->user_id;
+        $apostas = Apostas::where('user_id', $userId)->get();
+        return response()->json($apostas);
+    }
 }
