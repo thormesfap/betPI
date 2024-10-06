@@ -38,5 +38,3 @@ Route::prefix("/apostas")->middleware('logged')->group(function () {
     Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);
     Route::patch('/venceu/{id}', [ApostasController::class, 'updateVenceu']); // Nova rota para atualizar 'venceu'
 });
-
-Route::get('/modalidades', [TimeController::class, 'buscarModalidades']);
