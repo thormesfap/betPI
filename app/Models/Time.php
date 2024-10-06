@@ -12,4 +12,5 @@ class Time extends Model
     public function modalidade(): BelongsTo{
         return $this->belongsTo(Modalidade::class);
     }
+    protected $guarded = [];
 }
