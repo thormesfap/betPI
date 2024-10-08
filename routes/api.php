@@ -7,10 +7,6 @@ use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\ApostasController;
 use App\Http\Controllers\TimeController;
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 // Rotas de autenticação
 Route::group(
     [
