@@ -56,16 +56,16 @@ Route::prefix("/time")->middleware('isAdmin')->group(function () {
     Route::delete('/delete/{id}', [TimeController::class, 'deleteRecord']);
 });
 
+Route::prefix("/apostas")->middleware('logged')->group( function() {
+    Route::post('/', [ApostasController::class, 'store']);
+    Route::get('/minhas', [ApostasController::class, 'showUserApostas']);
+});
+
 // Rotas para as apostas para usuários admin
 Route::prefix("/apostas")->middleware('isAdmin')->group(function () {
-    Route::post('/', [ApostasController::class, 'store']);
     Route::get('/', [ApostasController::class, 'index']);
     Route::get('/vencedor/{venceu}', [ApostasController::class, 'showVencedor']);
     Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);
     Route::patch('/venceu/{id}', [ApostasController::class, 'updateVenceu']); // Nova rota para atualizar 'venceu'
 });
 
-Route::prefix("/apostas")->middleware('logged')->group( function() {
-    Route::post('/', [ApostasController::class, 'store']);
-    Route::post('/minhas', [ApostasController::class, 'showUserApostas']);
-});

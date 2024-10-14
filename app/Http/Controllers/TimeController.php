@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TimeRequest;
 use App\Models\Time;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class TimeController extends Controller
 
         return response()->json(['message'=> 'pega um time especifico', 'data' => $record]);
     }
-    public function createRecord(Request $request){
+    public function createRecord(TimeRequest $request){
         $data = $request->all();
 
         $record =  Time::create([
@@ -28,7 +29,7 @@ class TimeController extends Controller
         );
         return response()->json(['message'=>'inserido','account'=>$record]);
     }
-    public function editRecord(Request $request,int $id) {
+    public function editRecord(TimeRequest $request,int $id) {
         $record =  Time::where('id','=',$id)->update([
             'name'=> $request->name,
             'modalidades_id'=> $request->modalidade_id,
