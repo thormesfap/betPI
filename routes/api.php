@@ -58,7 +58,6 @@ Route::prefix("/time")->middleware('isAdmin')->group(function () {
 
 // Rotas para as apostas para usuários admin
 Route::prefix("/apostas")->middleware('isAdmin')->group(function () {
-    Route::post('/', [ApostasController::class, 'store']);
     Route::get('/', [ApostasController::class, 'index']);
     Route::get('/vencedor/{venceu}', [ApostasController::class, 'showVencedor']);
     Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);

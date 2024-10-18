@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JogoRequest;
 use App\Models\Jogos;
 use App\Models\Apostas;
 use Illuminate\Http\Request;
@@ -14,9 +15,9 @@ class jogoController extends Controller
 
         return response()->json(['message'=> 'todos os jogos', 'data' => $record]);
     }
-    
+
     // Registrar um novo jogo
-    public function createRecord(Request $request){
+    public function createRecord(JogoRequest $request){
         $data = $request->all();
 
         $jogos =  Jogos::create([
@@ -34,15 +35,13 @@ class jogoController extends Controller
     // Realizar o jogo
     public function realizarJogo(int $id){
         $jogo = Jogos::find($id);
-
-        $placar_casa = rand(0, 5);
-        
-        $placar_visitante = rand(0, 5);
-        $data_hora_atual = date('Y-m-d H:i:s');
-
         if (!$jogo) {
             return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
+
+        $placar_casa = rand(0, 5);
+        $placar_visitante = rand(0, 5);
+        $data_hora_atual = date('Y-m-d H:i:s');
 
         if ($jogo->data_hora_jogo <= $data_hora_atual && $jogo->placar_casa !== null && $jogo->placar_visitante !== null) {
             return response()->json(['message' => 'O jogo já ocorreu e possui placar registrado'], 400);
@@ -83,7 +82,7 @@ class jogoController extends Controller
     }
 
     // Editar jogo
-    public function editRecord(Request $request,int $id) {
+    public function editRecord(JogoRequest $request,int $id) {
         $game =  Jogos::where('id','=',$id)->update([
             'time_casa_id' => $request['time_casa_id'],
             'time_visitante_id' => $request['time_visitante_id'],
