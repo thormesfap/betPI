@@ -17,6 +17,12 @@ Após criação da imagem e execução do container, abra o navegador no link ht
 
 ***
 
+## Documentação dos Endpoints
+
+Para facilitar integração com o frontend, foi disponibilizada documentação, acessível através do endpoint /docs/api (http://localhost:8001/docs/api)
+
+***
+
 ## Instalação na máquina local
 É necessário possuir php (pelo menos versão 8.2) e as extensões `fileinfo`, `mbstring`, `zip`, `pdo_sqlite` ativadas no sistema,
 bem como composer instalado
@@ -36,3 +42,6 @@ Para subir o servidor, execute o comando:
 php artisan serve
 ```
 O servidor deve subir na máquina local, na porta 8000 (http://localhost:8000).
+
+
+

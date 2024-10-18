@@ -9,11 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-pdo_pgsql": "*",
+        "dedoc/scramble": "^0.11.21",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "tymon/jwt-auth": "^2.1",
-        "ext-pdo_pgsql": "*"
+        "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
