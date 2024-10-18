@@ -6,6 +6,7 @@ use App\Http\Requests\ApostaRequest;
 use Illuminate\Http\Request;
 use App\Models\Apostas;
 use App\Models\Jogos;
+use Illuminate\Support\Facades\Auth;
 
 class ApostasController extends Controller
 {
@@ -24,8 +25,15 @@ class ApostasController extends Controller
             return response()->json(['message' => 'Não é possível apostar em um jogo que já aconteceu'], 400);
         }
 
-        $dados = $request->all();
-        $dados['user_id'] = $user->id;
+        $dados = $request->validate([
+            'jogo_id' => 'required|integer',
+            'placar_casa' => 'nullable|integer',
+            'placar_visitante' => 'nullable|integer',
+            'resultado' => 'required|string|in:C,V,E', // Validar valores permitidos
+            'valor' => 'required|numeric',
+        ]);
+
+        $dados['user_id'] = Auth::user()->id;
 
         // Definir o campo 'limite' como a data e hora do jogo
         $dados['limite'] = \Carbon\Carbon::parse($jogo->data_hora_jogo)->subMinute();
@@ -78,10 +86,10 @@ class ApostasController extends Controller
     }
 
     // Mostrar apostas do usuário autenticado
-    public function showUserApostas(Request $request)
+    public function ver_minhas_apostas(Request $request)
     {
-        $userId = $request->user_id;
-        $apostas = Apostas::where('user_id', $userId)->get();
+        $user = Auth::user();
+        $apostas = Apostas::where('user_id', $user->id)->get();
         return response()->json($apostas);
     }
 }
