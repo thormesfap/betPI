@@ -33,27 +33,27 @@ Route::prefix("/bank-account")->middleware('logged')->group(function () {
 });
 
 // Rotas de jogos para usuários admin
-Route::prefix("/games")->middleware('isAdmin')->group(function () {
-    Route::get('/getAll', [jogoController::class, 'getAllRecord']);
-    Route::post('/post', [jogoController::class, 'createRecord']);
-    Route::put('/edit/{id}', [jogoController::class, 'editRecord']);
-    Route::delete('/delete/{id}', [jogoController::class, 'deleteRecord']);
-    Route::put('/realizarJogo/{id}', [jogoController::class, 'realizarJogo']);
+Route::prefix("/jogos")->middleware('isAdmin')->group(function () {
+    Route::get('/', [jogoController::class, 'getAllRecord']);
+    Route::post('/inserir', [jogoController::class, 'createRecord']);
+    Route::put('/editar/{id}', [jogoController::class, 'editRecord']);
+    Route::delete('/deletar/{id}', [jogoController::class, 'deleteRecord']);
+    Route::put('/finalizar/{id}', [jogoController::class, 'realizarJogo']);
 });
 
 // Rotas de jogos para usuários logados
-Route::prefix("/games")->middleware('logged')->group(function () {
+Route::prefix("/jogos")->middleware('logged')->group(function () {
     Route::get('/futuros', [jogoController::class, 'listarJogosQueAindaNaoComecaram']);
-    Route::get('/verJogo/{id}', [jogoController::class, 'verResultadoDeJogo']);
+    Route::get('/{id}', [jogoController::class, 'verResultadoDeJogo']);
 });
 
 // Rotas de times para usuários admin
 Route::prefix("/time")->middleware('isAdmin')->group(function () {
-    Route::get('/getAll', [TimeController::class, 'getAllRecord']);
-    Route::get('/get/{id}', [TimeController::class, 'getRecord']);
-    Route::post('/post', [TimeController::class, 'createRecord']);
-    Route::put('/edit/{id}', [TimeController::class, 'editRecord']);
-    Route::delete('/delete/{id}', [TimeController::class, 'deleteRecord']);
+    Route::get('/', [TimeController::class, 'getAllRecord']);
+    Route::get('/{id}', [TimeController::class, 'getRecord']);
+    Route::post('/inserir', [TimeController::class, 'createRecord']);
+    Route::put('/editar/{id}', [TimeController::class, 'editRecord']);
+    Route::delete('/deletar/{id}', [TimeController::class, 'deleteRecord']);
 });
 
 // Rotas para as apostas para usuários admin
@@ -67,5 +67,5 @@ Route::prefix("/apostas")->middleware('isAdmin')->group(function () {
 
 Route::prefix("/apostas")->middleware('logged')->group( function() {
     Route::post('/', [ApostasController::class, 'store']);
-    Route::post('/minhas', [ApostasController::class, 'showUserApostas']);
+    Route::get('/minhas', [ApostasController::class, 'ver_minhas_apostas']);
 });
