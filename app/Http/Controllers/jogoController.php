@@ -9,14 +9,22 @@ use Illuminate\Http\Request;
 
 class jogoController extends Controller
 {
-    // Buscar todos os jogos
+    /**
+     * Mostrar todos os jogos
+     *
+     * Endpoint que mostra todos os jogos cadastrados. Precisa de perfil Admin
+     */
     public function getAllRecord(){
         $record = Jogos::all();
 
         return response()->json(['message'=> 'todos os jogos', 'data' => $record]);
     }
 
-    // Registrar um novo jogo
+    /**
+     * Cria Novo Jogo
+     *
+     * Endpoint para criação de um jogo. Precisa de perfil Admin
+     */
     public function createRecord(JogoRequest $request){
         $data = $request->all();
 
@@ -32,7 +40,11 @@ class jogoController extends Controller
         return response()->json(['message'=>'inserido','account'=>$jogos]);
     }
 
-    // Realizar o jogo
+    /**
+     * Realizar Jogo
+     *
+     * Endpoint que simula o resultado e placar de um jogo, marcando-o como realizado. Precisa de perfil Admin
+     */
     public function realizarJogo(int $id){
         $jogo = Jogos::find($id);
         if (!$jogo) {
@@ -75,13 +87,21 @@ class jogoController extends Controller
         return response()->json(['message'=>'Jogo realizado', 'account'=>$jogo]);
     }
 
-    // Ver resultado de jogo
+    /**
+     * Ver Resultado
+     *
+     * Endpoint que mostra o resultado de um jogo. Precisa ser usuário logado
+     */
     public function verResultadoDeJogo(int $id){
         $jogo = Jogos::where('id', '=', $id)->get();
         return response()->json($jogo);
     }
 
-    // Editar jogo
+    /**
+     * Atualizar Jogo
+     *
+     * Endpoint que mostra todos os times cadastrados. Precisa de perfil Admin
+     */
     public function editRecord(JogoRequest $request,int $id) {
         $game =  Jogos::where('id','=',$id)->update([
             'time_casa_id' => $request['time_casa_id'],
@@ -94,20 +114,31 @@ class jogoController extends Controller
         return response()->json(['message'=>'atualizado', 'account'=>$game]);
     }
 
-    // Deletar jogo
+    /**
+     * Apagar Jogo
+     *
+     * Endpoint para apagar um jogo. Precisa de perfil Admin
+     */
     public function deleteRecord(int $id) {
         $game =  Jogos::where('id', '=', $id )->delete();
         return response()->json(['message'=>'Deletado']);
     }
-
-    // Mostrar jogos que ainda não começaram
+    /**
+     * Mostrar Jogos Pendentes
+     *
+     * Endpoint que mostra os jogos que ainda não foram realizados. Precisa estar logado
+     */
     public function listarJogosQueAindaNaoComecaram(){
         $data_hora_atual = date('Y-m-d H:i:s');
         $jogosQueAindaNaoComecaram = Jogos::where('data_hora_jogo', '>', $data_hora_atual)->get();
         return response()->json($jogosQueAindaNaoComecaram);
     }
 
-    // Mostrar jogos que já encerraram
+    /**
+     * Mostrar Jogos Passados
+     *
+     * Endpoint que mostra os jogos que já foram realizados. Precisa de perfil Admin
+     */
     public function listarJogosQuePassaram(){
         $data_hora_atual = date('Y-m-d H:i:s');
         $jogosQuePassaram = Jogos::where('data_hora_jogo', '<=', $data_hora_atual)->get();

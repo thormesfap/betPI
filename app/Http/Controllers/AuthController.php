@@ -94,6 +94,11 @@ class AuthController extends Controller
         return $this->respondWithToken(auth('api')->refresh());
     }
 
+    /**
+     * Promove Usuário
+     *
+     * Endpoint para atribuir perfil de administrador ao usuário informado. Precisa ter perfil de Admin
+     */
     public function promote(User $user): JsonResponse
     {
         $roleAdmin = Role::where('name', 'role_admin')->first();

@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ApostasController extends Controller
 {
-    // Criar uma nova aposta
+    /**
+     * Criar uma nova aposta
+     */
     public function store(ApostaRequest $request)
     {
         // Buscar a data e hora do jogo
@@ -47,29 +49,46 @@ class ApostasController extends Controller
     }
 
 
-
-    // Mostrar todas as apostas
+    /**
+     * Mostrar todas as apostas
+     *
+     * Endpoint que traz a informação de todas as apostas realizadas. Precisa de perfil Admin
+     */
     public function index()
     {
         $apostas = Apostas::listarApostas();
         return response()->json($apostas);
     }
 
-    // Mostrar apostas que apostaram em quem seria o vencedor
+    /**
+     * Mostrar apostas de resultado
+     *
+     * Endpoint para mostrar todas as apostas que foram feitas com base em resultado, e acertaram o vencedor. Precisa de perfil Admin
+     *
+     */
     public function showVencedor($venceu)
     {
         $apostas = Apostas::listarApostasAcertaramVencedor($venceu);
         return response()->json($apostas);
     }
 
-    // Mostrar apostas que acertaram o placar
+    /**
+     * Mostrar apostas de placar
+     *
+     * Endpoint para mostrar todas as apostas que foram feitas com base em placar, e acertaram qual seria o placar. Precisa de perfil Admin
+     */
     public function showPlacar($placarCasa, $placarVisitante)
     {
         $apostas = Apostas::listarApostasAcertaramPlacar($placarCasa, $placarVisitante);
         return response()->json($apostas);
     }
 
-    // Atualizar o campo 'venceu' de uma aposta
+    /**
+     * Atualizar o campo 'venceu' de uma aposta
+     *
+     * Endpoint para atualizar o status de 'venceu' da aposta. Precisa de perfil Admin
+     */
+
     public function updateVenceu(Request $request, $id)
     {
         $dados = $request->validate([
@@ -85,10 +104,14 @@ class ApostasController extends Controller
         return response()->json(['message' => 'Aposta não encontrada'], 404);
     }
 
-    // Mostrar apostas do usuário autenticado
+    /**
+     * Mostrar apostas do usuário autenticado
+     *
+     * Mostra as apostas feitas pelo usuário que estiver autenticado
+     */
     public function ver_minhas_apostas(Request $request)
     {
-        $user = Auth::user();
+        $user = auth('api')->user();
         $apostas = Apostas::where('user_id', $user->id)->get();
         return response()->json($apostas);
     }

@@ -10,11 +10,21 @@ use App\Models\Bank_Account;
 
 class BankAccountController extends Controller
 {
+    /**
+     * Conta do Usuário
+     *
+     * Endpoint para trazer a conta bancária do usuário informado. Precisa estar logado
+     */
     public function Account_of_User(int $user_id): JsonResponse{
         $bank_accounts =  Bank_Account::where('user_id', '=', $user_id )->get();
         return response()->json(['message'=>'hello','account'=>$bank_accounts]);
     }
 
+    /**
+     * Criar Conta
+     *
+     * Endpoint para criação de conta bancária para o usuário. Precisa estar logado
+     */
     public function createRecord(Request $request): JsonResponse{
         $data = $request;
         $bank_accounts =  Bank_Account::where('user_id', '=', $data->user_id )->get();
@@ -35,6 +45,11 @@ class BankAccountController extends Controller
 
     }
 
+    /**
+     * Editar Conta
+     *
+     * Endpoint para atualização de dados da conta bancária para o usuário. Precisa estar logado
+     */
     public function editRecord(Request $request,int $id): JsonResponse{
         $bank_accounts =  Bank_Account::where('id','=',$id)->update([
             'user_id' => $request->user_id,
@@ -46,6 +61,12 @@ class BankAccountController extends Controller
             ]);
         return response()->json(['message'=>'atualizado', 'request' => $request]);
     }
+
+    /**
+     * Apagar Conta
+     *
+     * Endpoint para apagar conta bancária para o usuário. Precisa estar logado
+     */
     public function deleteRecord(int $user_id): JsonResponse{
         $bank_accounts =  Bank_Account::where('user_id', '=', $user_id )->delete();
         return response()->json(['message'=>'Deletado']);

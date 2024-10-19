@@ -38,6 +38,7 @@ Route::prefix("/jogos")->middleware('isAdmin')->group(function () {
     Route::post('/inserir', [jogoController::class, 'createRecord']);
     Route::put('/editar/{id}', [jogoController::class, 'editRecord']);
     Route::delete('/deletar/{id}', [jogoController::class, 'deleteRecord']);
+    Route::get('/passados', [jogoController::class, 'listarJogosQuePassaram']);
     Route::put('/finalizar/{id}', [jogoController::class, 'realizarJogo']);
 });
 
