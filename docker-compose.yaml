@@ -1,13 +1,40 @@
 services:
-  backend:
-    build: .
-    container_name: betpi-backend
+  # Nginx Load Balancer
+  nginx:
+    image: nginx
+    container_name: load-balancer
     ports:
-      - "8001:8001"
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+
+  backend1: &backend
+    build: .
+    container_name: betpi-backend1
+    environment:
+      - SERVER_ID=1
+    ports:
+      - "8001"
     volumes:
       - ./:/app
     depends_on:
       - postgres_primary
+
+  backend2:
+    <<: *backend
+    container_name: betpi-backend2
+    environment:
+      - SERVER_ID=2
+
+  backend3:
+    <<: *backend
+    container_name: betpi-backend3
+    environment:
+      - SERVER_ID=3
 
 
 # Servidor primário (escrita)
@@ -30,11 +57,11 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "scram-sha-256\nhost replication all 0.0.0.0/0 md5"
       POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
     command: |
-      postgres 
-      -c wal_level=replica 
-      -c hot_standby=on 
-      -c max_wal_senders=10 
-      -c max_replication_slots=10 
+      postgres
+      -c wal_level=replica
+      -c hot_standby=on
+      -c max_wal_senders=10
+      -c max_replication_slots=10
       -c hot_standby_feedback=on
     volumes:
       - ./postgres/00_init.sql:/docker-entrypoint-initdb.d/00_init.sql
