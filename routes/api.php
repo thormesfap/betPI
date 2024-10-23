@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\jogoController;
+use App\Http\Controllers\ModalidadesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BankAccountController;
@@ -68,4 +69,16 @@ Route::prefix("/apostas")->middleware('isAdmin')->group(function () {
 Route::prefix("/apostas")->middleware('logged')->group( function() {
     Route::post('/', [ApostasController::class, 'store']);
     Route::get('/minhas', [ApostasController::class, 'ver_minhas_apostas']);
+});
+
+
+//Rotas para modalidade, para usuários logados e Admin
+Route::prefix('/modalidade')->middleware('logged')->group(function () {
+    Route::get('/', [ModalidadesController::class, 'index']);
+    Route::get('/{modalidades}', [ModalidadesController::class, 'show']);
+});
+Route::prefix('/modalidade')->middleware('isAdmin')->group(function () {
+    Route::post('/', [ModalidadesController::class, 'store']);
+    Route::patch('/{modalidades}', [ModalidadesController::class, 'update']);
+    Route::delete('/{modalidades}', [ModalidadesController::class, 'destroy']);
 });
