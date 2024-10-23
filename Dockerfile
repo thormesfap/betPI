@@ -25,5 +25,5 @@ COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Expor a porta e iniciar o servidor
-EXPOSE 8001
+EXPOSE 8080
 ENTRYPOINT ["/entrypoint.sh"]

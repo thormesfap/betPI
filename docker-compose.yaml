@@ -4,7 +4,7 @@ services:
     image: nginx
     container_name: load-balancer
     ports:
-      - "80:80"
+      - "8001:8001"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
@@ -15,10 +15,8 @@ services:
   backend1: &backend
     build: .
     container_name: betpi-backend1
-    environment:
-      - SERVER_ID=1
     ports:
-      - "8001"
+      - "8080"
     volumes:
       - ./:/app
     depends_on:
@@ -27,15 +25,10 @@ services:
   backend2:
     <<: *backend
     container_name: betpi-backend2
-    environment:
-      - SERVER_ID=2
 
   backend3:
     <<: *backend
     container_name: betpi-backend3
-    environment:
-      - SERVER_ID=3
-
 
 # Servidor primário (escrita)
   postgres_primary:

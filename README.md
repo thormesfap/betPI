@@ -13,13 +13,13 @@ Linux
 ```shell
 sudo docker compose up -d --build
 ``` 
-Após criação da imagem e execução do container, abra o navegador no link http://localhost para abrir a aplicação
+Após criação da imagem e execução do container, abra o navegador no link http://localhost:8001 para abrir a aplicação
 
 ***
 
 ## Documentação dos Endpoints
 
-Para facilitar integração com o frontend, foi disponibilizada documentação, acessível através do endpoint /docs/api (http://localhost/docs/api)
+Para facilitar integração com o frontend, foi disponibilizada documentação, acessível através do endpoint /docs/api (http://localhost:8001/docs/api)
 
 ***
 
