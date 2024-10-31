@@ -91,7 +91,7 @@ class TimesSeeder extends Seeder
             ],
             [
                 'name' => 'Athletico Paranaense',
-                'escudo' => 'https://logodetimes.com/times/athletico-paranaense/logo-athletico-paranaense-256.png',
+                'escudo' => 'https://logodetimes.com/times/atletico-paranaense/logo-atletico-paranaense-256.png',
             ],
             [
                 'name' => 'Avaí',
@@ -123,7 +123,7 @@ class TimesSeeder extends Seeder
             ],
             [
                 'name' => 'Goiás',
-                'escudo' => 'https://logodetimes.com/times/goias/logo-goias-256.png',
+                'escudo' => 'https://logodetimes.com/times/goias/logo-goias-esporte-clube-256.png',
             ],
             [
                 'name' => 'Guarani',
@@ -135,7 +135,7 @@ class TimesSeeder extends Seeder
             ],
             [
                 'name' => 'Londrina',
-                'escudo' => 'https://logodetimes.com/times/londrina/logo-londrina-256.png',
+                'escudo' => 'https://logodetimes.com/times/londrina/logo-londrina-5.png',
             ],
             [
                 'name' => 'Náutico',
@@ -143,7 +143,7 @@ class TimesSeeder extends Seeder
             ],
             [
                 'name' => 'Operário',
-                'escudo' => 'https://logodetimes.com/times/operario/logo-operario-256.png',
+                'escudo' => 'https://logodetimes.com/times/operario-pr/logo-operario-pr-256.png',
             ],
             [
                 'name' => 'Paraná',
@@ -159,18 +159,18 @@ class TimesSeeder extends Seeder
             ],
             [
                 'name' => 'Sport',
-                'escudo' => 'https://logodetimes.com/times/sport/logo-sport-256.png',
+                'escudo' => 'https://logodetimes.com/times/sport-recife/logo-sport-recife-256.png',
             ],
             [
                 'name' => 'Vila Nova',
-                'escudo' => 'https://logodetimes.com/times/vila-nova/logo-vila-nova-256.png',
+                'escudo' => 'https://logodetimes.com/times/vila-nova/logo-vila-nova-5.png',
             ],
             [
                 'name' => 'Vitória',
                 'escudo' => 'https://logodetimes.com/times/vitoria/logo-vitoria-256.png',
             ],
         ];
-        
+
         // Cria os times no banco de dados e associa com a modalidade 'Futebol'
         foreach ($times as $time) {
             $newTime = new Time();
