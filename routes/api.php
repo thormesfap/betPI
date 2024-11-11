@@ -57,7 +57,7 @@ Route::prefix("/time")->middleware('isAdmin')->group(function () {
     Route::put('/editar/{id}', [TimeController::class, 'editRecord']);
     Route::delete('/deletar/{id}', [TimeController::class, 'deleteRecord']);
 });
-Route::get('/modalidade/{id}/', [TimeController::class, 'getTimeModalidade'])->middleware('logged');
+Route::get('time/modalidade/{id}/', [TimeController::class, 'getTimeModalidade'])->middleware('logged');
 
 // Rotas para as apostas para usuários admin
 Route::prefix("/apostas")->middleware('isAdmin')->group(function () {

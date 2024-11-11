@@ -15,6 +15,7 @@ services:
   backend1: &backend
     build: .
     container_name: betpi-backend1
+    restart: always
     ports:
       - "8080"
     volumes:
