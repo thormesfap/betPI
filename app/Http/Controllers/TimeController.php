@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TimeRequest;
+use App\Models\Modalidades;
 use App\Models\Time;
 use Illuminate\Http\Request;
 
@@ -70,5 +71,16 @@ class TimeController extends Controller
     public function deleteRecord(int $id) {
         $record =  Time::where('id', '=', $id )->delete();
         return response()->json(['message'=>'Deletado']);
+    }
+
+    /**
+     * Buscar times por modalidade
+     *
+     * Endpoint que busca todos os times vinculados a uma modalidade
+     */
+    public function getTimeModalidade(int $id){
+        $modalidade = Modalidades::findOrFail($id);
+        $times = Time::where('modalidades_id','=',$id)->get();
+        return response()->json($times);
     }
 }
