@@ -17,7 +17,7 @@ class jogoController extends Controller
     public function getAllRecord(){
         $record = Jogos::all();
 
-        return response()->json(['message'=> 'todos os jogos', 'data' => $record]);
+        return response()->json($record);
     }
 
     /**
@@ -37,7 +37,7 @@ class jogoController extends Controller
             'modalidade_id' => $data['modalidade_id'],
             ]
         );
-        return response()->json(['message'=>'inserido','account'=>$jogos]);
+        return response()->json($jogos);
     }
 
     /**
@@ -56,7 +56,7 @@ class jogoController extends Controller
         $data_hora_atual = date('Y-m-d H:i:s');
 
         if ($jogo->data_hora_jogo <= $data_hora_atual && $jogo->placar_casa !== null && $jogo->placar_visitante !== null) {
-            return response()->json(['message' => 'O jogo já ocorreu e possui placar registrado'], 400);
+            return response()->json('O jogo já ocorreu e possui placar registrado', 400);
         }
 
         $jogo->update([
@@ -84,7 +84,7 @@ class jogoController extends Controller
             })
             ->update(['venceu' => true]);
 
-        return response()->json(['message'=>'Jogo realizado', 'account'=>$jogo]);
+        return response()->json($jogo);
     }
 
     /**
@@ -111,7 +111,7 @@ class jogoController extends Controller
             'data_hora_jogo' => $request['data_hora_jogo'],
             'modalidade_id' => $request['modalidade_id'],
             ]);
-        return response()->json(['message'=>'atualizado', 'account'=>$game]);
+        return response()->json($game);
     }
 
     /**
@@ -121,7 +121,7 @@ class jogoController extends Controller
      */
     public function deleteRecord(int $id) {
         $game =  Jogos::where('id', '=', $id )->delete();
-        return response()->json(['message'=>'Deletado']);
+        return response()->json($game);
     }
     /**
      * Mostrar Jogos Pendentes

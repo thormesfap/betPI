@@ -17,7 +17,7 @@ class TimeController extends Controller
     public function getAllRecord(){
         $record = Time::all();
 
-        return response()->json(['message'=> 'todos os times', 'data' => $record]);
+        return response()->json($record);
     }
 
     /**
@@ -28,7 +28,7 @@ class TimeController extends Controller
     public function getRecord(int $id){
         $record = Time::where('id','=',$id)->get();
 
-        return response()->json(['message'=> 'pega um time especifico', 'data' => $record]);
+        return response()->json($record);
     }
 
     /**
@@ -45,7 +45,7 @@ class TimeController extends Controller
                 'escudo'=> $request->escudo
                 ]
         );
-        return response()->json(['message'=>'inserido','account'=>$record]);
+        return response()->json($record);
     }
 
     /**
@@ -59,7 +59,7 @@ class TimeController extends Controller
             'modalidades_id'=> $request->modalidade_id,
             'escudo'=> $request->escudo
             ]);
-        return response()->json(['message'=>'atualizado', 'account'=>$record]);
+        return response()->json($record);
     }
 
     /**
@@ -69,6 +69,6 @@ class TimeController extends Controller
      */
     public function deleteRecord(int $id) {
         $record =  Time::where('id', '=', $id )->delete();
-        return response()->json(['message'=>'Deletado']);
+        return response()->json($record);
     }
 }
