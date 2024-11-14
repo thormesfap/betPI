@@ -1,0 +1,2 @@
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+* * * * * /usr/local/bin/php /app/artisan schedule:run >> /var/log/cron.log 2>&1
