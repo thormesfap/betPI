@@ -15,7 +15,7 @@ class jogoController extends Controller
      * Endpoint que mostra todos os jogos cadastrados. Precisa de perfil Admin
      */
     public function getAllRecord(){
-        $record = Jogos::all();
+        $record = Jogos::all()->orderBy('data_hora_jogo');
 
         return response()->json($record);
     }
@@ -130,7 +130,7 @@ class jogoController extends Controller
      */
     public function listarJogosQueAindaNaoComecaram(){
         $data_hora_atual = date('Y-m-d H:i:s');
-        $jogosQueAindaNaoComecaram = Jogos::where('data_hora_jogo', '>', $data_hora_atual)->get();
+        $jogosQueAindaNaoComecaram = Jogos::where('data_hora_jogo', '>', $data_hora_atual)->orderBy('data_hora_jogo')->get();
         return response()->json($jogosQueAindaNaoComecaram);
     }
 
@@ -141,7 +141,7 @@ class jogoController extends Controller
      */
     public function listarJogosQuePassaram(){
         $data_hora_atual = date('Y-m-d H:i:s');
-        $jogosQuePassaram = Jogos::where('data_hora_jogo', '<=', $data_hora_atual)->get();
+        $jogosQuePassaram = Jogos::where('data_hora_jogo', '<=', $data_hora_atual)->orderBy('data_hora_jogo')->get();
         return response()->json($jogosQuePassaram);
     }
 }
