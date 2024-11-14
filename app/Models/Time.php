@@ -13,6 +13,8 @@ class Time extends Model
 
     protected $table = 'times';
 
+    protected $with = ['modalidades'];
+
 
     protected $fillable = [
         'name',

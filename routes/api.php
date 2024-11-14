@@ -43,9 +43,9 @@ Route::prefix("/jogos")->middleware('isAdmin')->group(function () {
     Route::put('/finalizar/{id}', [jogoController::class, 'realizarJogo']);
 });
 
+Route::get('/jogos/futuros', [jogoController::class, 'listarJogosQueAindaNaoComecaram']);
 // Rotas de jogos para usuários logados
 Route::prefix("/jogos")->middleware('logged')->group(function () {
-    Route::get('/futuros', [jogoController::class, 'listarJogosQueAindaNaoComecaram']);
     Route::get('/{id}', [jogoController::class, 'verResultadoDeJogo']);
 });
 

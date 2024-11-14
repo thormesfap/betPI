@@ -2,14 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Apostas extends Model
 {
+
+    const MULTIPLICADOR_RESULTADO = 1.5;
+    const MULTIPLICADOR_PLACAR = 5;
+
     use HasFactory;
 
     protected $table = 'apostas';
+
+    protected $with = ['jogo'];
+
+    protected $appends = ['multiplicador'];
 
     protected $primaryKey = 'id';
 
@@ -29,6 +39,20 @@ class Apostas extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function jogo(): BelongsTo {
+        return $this->belongsTo(Jogos::class);
+    }
+
+    protected function multiplicador(): Attribute{
+        return Attribute::make(
+            get: function($value, $attributes){
+                if(empty($attributes['resultado'])){
+                    return self::MULTIPLICADOR_PLACAR;
+                }
+                return self::MULTIPLICADOR_RESULTADO;
+            }
+        );
     }
 
     // Criar uma nova aposta
