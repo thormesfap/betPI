@@ -31,6 +31,16 @@ services:
     <<: *backend
     container_name: betpi-backend3
 
+  backend-cronjob:
+    <<: *backend
+    container_name: backend-cronjob
+    entrypoint: |
+      bash -c "
+        service cron start
+        echo \"Cron service started\"
+        tail -f /var/log/cron.log
+      "
+
 # Servidor primário (escrita)
   postgres_primary:
     image: postgres

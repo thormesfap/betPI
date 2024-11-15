@@ -28,11 +28,5 @@ php artisan migrate
 # Cria o secredo do jwt
 php artisan jwt:secret
 
-#configurando tempo de cronjob
-
-
-#Iniciando cronservice
-service cron start
-
 # Iniciar o servidor
 php artisan serve --host=0.0.0.0 --port=8080
