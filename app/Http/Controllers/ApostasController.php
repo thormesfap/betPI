@@ -27,14 +27,14 @@ class ApostasController extends Controller
             return response()->json(['message' => 'Não é possível apostar em um jogo que já aconteceu'], 400);
         }
 
-        $dados = $request->validate([
-            'jogo_id' => 'required|integer',
-            'placar_casa' => 'nullable|integer',
-            'placar_visitante' => 'nullable|integer',
-            'resultado' => 'required|string|in:C,V,E', // Validar valores permitidos
-            'valor' => 'required|numeric',
-        ]);
-
+        // $dados = $request->validate([
+        //     'jogo_id' => 'required|integer',
+        //     'placar_casa' => 'nullable|integer',
+        //     'placar_visitante' => 'nullable|integer',
+        //     'resultado' => 'required|string|in:C,V,E', // Validar valores permitidos
+        //     'valor' => 'required|numeric',
+        // ]);
+        $dados = $request->all();
         $dados['user_id'] = Auth::user()->id;
 
         // Definir o campo 'limite' como a data e hora do jogo

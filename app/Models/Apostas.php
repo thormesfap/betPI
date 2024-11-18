@@ -47,7 +47,7 @@ class Apostas extends Model
     protected function multiplicador(): Attribute{
         return Attribute::make(
             get: function($value, $attributes){
-                if(empty($attributes['resultado'])){
+                if(array_key_exists('resultado', $attributes)){
                     return self::MULTIPLICADOR_PLACAR;
                 }
                 return self::MULTIPLICADOR_RESULTADO;
@@ -59,7 +59,7 @@ class Apostas extends Model
     public static function createAposta($data)
     {
         // Validar valores permitidos para 'resultado'
-        if (!in_array($data['resultado'], ['C', 'V', 'E'])) {
+        if (array_key_exists('resultado', $data) && !in_array($data['resultado'], ['C', 'V', 'E'])) {
             throw new \InvalidArgumentException('Valor inválido para o campo resultado.');
         }
 
