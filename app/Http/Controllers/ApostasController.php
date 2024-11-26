@@ -113,6 +113,9 @@ class ApostasController extends Controller
     {
         $user = auth('api')->user();
         $apostas = Apostas::where('user_id', $user->id)->get();
-        return response()->json($apostas);
+        $sorted = $apostas->sortByDesc(function (Apostas $a) {
+            return $a->jogo->data_hora_jogo;
+        });
+        return response()->json($sorted->values()->all());
     }
 }
