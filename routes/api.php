@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EscudoController;
 use App\Http\Controllers\jogoController;
 use App\Http\Controllers\ModalidadesController;
 use Illuminate\Http\Request;
@@ -82,4 +83,8 @@ Route::prefix('/modalidade')->middleware('isAdmin')->group(function () {
     Route::post('/', [ModalidadesController::class, 'store']);
     Route::patch('/{modalidades}', [ModalidadesController::class, 'update']);
     Route::delete('/{modalidades}', [ModalidadesController::class, 'destroy']);
+});
+
+Route::prefix('escudos/download')->middleware('isAdmin')->group(function () {
+    Route::get('/', [EscudoController::class, 'saveImages']);
 });
