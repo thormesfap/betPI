@@ -69,7 +69,10 @@ class ApostasController extends Controller
     public function showVencedor($venceu)
     {
         $apostas = Apostas::listarApostasAcertaramVencedor($venceu);
-        return response()->json($apostas);
+        $sorted = $apostas->sortByDesc(function (Apostas $a) {
+            return $a->jogo->data_hora_jogo;
+        });
+        return response()->json($sorted->values()->all());
     }
 
     /**
@@ -80,6 +83,17 @@ class ApostasController extends Controller
     public function showPlacar($placarCasa, $placarVisitante)
     {
         $apostas = Apostas::listarApostasAcertaramPlacar($placarCasa, $placarVisitante);
+        return response()->json($apostas);
+    }
+
+    /**
+     * Registrar Aposta como paga
+     *
+     * Endpoint para registrar que uma aposta foi paga
+     */
+    public function registrarPaga(Apostas $apostas){
+        $apostas->paga = true;
+        $apostas->save();
         return response()->json($apostas);
     }
 

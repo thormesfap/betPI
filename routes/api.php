@@ -66,6 +66,7 @@ Route::prefix("/apostas")->middleware('isAdmin')->group(function () {
     Route::get('/vencedor/{venceu}', [ApostasController::class, 'showVencedor']);
     Route::get('/placar/{placarCasa}/{placarVisitante}', [ApostasController::class, 'showPlacar']);
     Route::patch('/venceu/{id}', [ApostasController::class, 'updateVenceu']); // Nova rota para atualizar 'venceu'
+    Route::patch('/pagar/{apostas}', [ApostasController::class, 'registrarPaga']);
 });
 
 Route::prefix("/apostas")->middleware('logged')->group( function() {

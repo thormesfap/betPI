@@ -17,7 +17,7 @@ class Apostas extends Model
 
     protected $table = 'apostas';
 
-    protected $with = ['jogo'];
+    protected $with = ['jogo','user'];
 
     protected $appends = ['multiplicador'];
 
@@ -48,9 +48,9 @@ class Apostas extends Model
         return Attribute::make(
             get: function($value, $attributes){
                 if(array_key_exists('resultado', $attributes)){
-                    return self::MULTIPLICADOR_PLACAR;
+                    return empty($attributes['resultado']) ? self::MULTIPLICADOR_PLACAR : self::MULTIPLICADOR_RESULTADO;
                 }
-                return self::MULTIPLICADOR_RESULTADO;
+                return self::MULTIPLICADOR_PLACAR;
             }
         );
     }
